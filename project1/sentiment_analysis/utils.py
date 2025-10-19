@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 
 import project1 as p1
 import sys
+from pathlib import Path
 
 if sys.version_info[0] < 3:
     PYTHON3 = False
@@ -16,7 +17,9 @@ def load_toy_data(path_toy_data):
     Returns the tuple (features, labels) in which features is an Nx2 numpy matrix and
     labels is a length-N vector of +1/-1 labels.
     """
-    labels, xs, ys = np.loadtxt(path_toy_data, delimiter='\t', unpack=True)
+    here = Path(__file__).resolve().parent
+    fpath = here / path_toy_data 
+    labels, xs, ys = np.loadtxt(fpath, delimiter='\t', unpack=True)
     return np.vstack((xs, ys)).T, labels
 
 def load_data(path_data, extras=False):
@@ -38,12 +41,14 @@ def load_data(path_data, extras=False):
 
     basic_fields = {'sentiment', 'text'}
     numeric_fields = {'sentiment', 'helpfulY', 'helpfulN'}
-
+    here = Path(__file__).resolve().parent
+    pd = here / path_data
+    
     data = []
     if PYTHON3:
-        f_data = open(path_data, encoding="latin1")
+        f_data = open(pd, encoding="latin1")
     else:
-        f_data = open(path_data)
+        f_data = open(pd)
 
     for datum in csv.DictReader(f_data, delimiter='\t'):
         for field in list(datum.keys()):

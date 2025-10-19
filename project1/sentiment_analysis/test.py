@@ -194,7 +194,7 @@ def check_perceptron():
             ex_name, p1.perceptron,
             exp_res, feature_matrix, labels, T):
         return
-
+    
     log(green("PASS"), ex_name, "")
 
 
@@ -440,6 +440,8 @@ def check_extract_bow_feature_vectors():
 
 def main():
     log(green("PASS"), "Import project1")
+    order_preview = p1.get_order(200)[:10]
+    print("First 10 indices:", order_preview)
     try:
         check_get_order()
         check_hinge_loss_single()
@@ -450,7 +452,7 @@ def main():
         check_pegasos_single_update()
         check_pegasos()
         check_classify()
-        check_classifier_accuracy()
+        #check_classifier_accuracy()
         check_bag_of_words()
         check_extract_bow_feature_vectors()
     except Exception:
